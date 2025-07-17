@@ -28,33 +28,46 @@ public class App {
          
     }
 
-    private static void runMaze(){
-        boolean[][] predefinedMaze= {
-                        {true,true,true,true},
-                        {false,true,true,true}, 
-                        {true,true,false,true}, 
-                        {true,true,true,true}}
-                        ;
-
+    private static void runMaze() {
+        boolean[][] predefinedMaze = {
+            {true,true,true,true},
+            {false,true,false,true},
+            {true,true,false,false},
+            {true,true,true,true}
+        };
         Maze maze = new Maze(predefinedMaze);
-        System.out.println("Laberinto Cargado");
+        System.out.println("Laberiton Cargado");
         maze.printMaze();
-
+        
         Cell star = new Cell(0, 0);
         Cell end = new Cell(3, 3);
         
-        List<MazeSolver> solvers = Arrays.asList(new MazeSolverRecursive(),new MazeSolverRecursivoFour());
+        List<MazeSolver> solvers = Arrays.asList(new MazeSolverRecursive(),new MazeSolverRecursivoFour(), new MazeSolverRecursivoCompletoBT());
         MazeSolver solver1 = solvers.get(0);
-        List<Cell> path1;
+        MazeResult path1;
         path1 = solver1.getPath(maze.maze, star, end);
 
         System.out.println("\nCamino encontrado con MazeSolverRecurivo:");
-        System.out.println(path1.reversed());
+        System.out.println(path1);
         
         MazeSolver solver2 = solvers.get(1);
-        List<Cell> path2;
+        MazeResult path2;
         path2 = solver2.getPath(maze.maze, star, end);
         System.out.println("\nCamino encontrado con MazeSolverRecursivoFour:");
-        System.out.println(path2.reversed());
+        System.out.println(path2);
+
+        System.out.println("\nCamino encontrado con MazeSolverRecursivoCompletoBT:");
+        MazeSolver solver3 = solvers.get(2);
+        MazeResult path3;
+
+        path3 = solver3.getPath(maze.maze, star, end);
+        System.out.println(path3);
+
+        System.out.println("\nCamino visitado");
+        maze.printMazeVisited(path3);
+
+        System.out.println("\nCamino completo y optimo");
+        maze.printMazePath(path3);
+        
     }
 }
