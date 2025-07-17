@@ -19,4 +19,9 @@ public class Cell {
     public void setRow(int row) {
         this.row = row;
     }
+
+    @Override
+    public String toString() {
+        return "[row=" + row + ", col=" + col + "]";
+    }
 }
